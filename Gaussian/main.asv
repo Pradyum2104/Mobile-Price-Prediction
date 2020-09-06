@@ -1,0 +1,33 @@
+function Accuracy=main()
+clc;
+clear;
+
+impute_type = '';
+Accuracy_train=zeros(10,1);
+Accuracy_test=zeros(10,1);
+missing_percentage=zeros(10,1);
+for i=1:10
+    missing_percentage(i)=(i-1)*10;
+    [~,Accuracy_train(i),Accuracy_test(i)]=gaussian_classifier(missing_percentage(i));
+end
+
+figure(1)
+title('Training Accuracy V.S Missing Values(Gaussian)');
+xlabel('Missing Percentage');
+hold on
+ylabel('Percentage Accuracy');
+hold on
+plot(missing_percentage,Accuracy_train,'-o','MarkerSize',5,'MarkerEdgeColor','red','MarkerFaceColor',[1 .6 .6],'LineWidth',4);
+hold on
+saveas(gcf, '../figs/gaussian_train.png');
+
+% subplot(1, 2, 2);
+figure(2)
+title('Testing Accuracy V.S Missing Values(Gaussian)');
+xlabel('Missing Percentage');
+hold on
+ylabel('Percentage Accuracy');
+hold on
+plot(missing_percentage,Accuracy_test,'-o','MarkerSize',5,'MarkerEdgeColor','red','MarkerFaceColor',[1 .6 .6],'LineWidth',4);
+hold on
+saveas(gcf, '../figs/gaussian_test.png');
